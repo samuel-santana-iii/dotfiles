@@ -1,6 +1,6 @@
-# 🛠️ Master Terminal Configuration (WSL)
+# 🛠️ Master Terminal Configuration
 
-My personal "Master Class" configuration for Linux/WSL. This repository automates the installation and configuration of a modern, Rust-based terminal environment.
+My personal "Master Class" configuration for Linux. This repository automates the installation and configuration of a modern, Rust-based terminal environment across multiple distributions.
 
 ## ⚡ The Stack
 
@@ -12,19 +12,30 @@ My personal "Master Class" configuration for Linux/WSL. This repository automate
 
 ---
 
-## 🛑 Prerequisites (Windows Side)
+## 🛑 Prerequisites
 
-Since this runs on WSL, the Linux subsystem cannot render icons unless the **Windows Terminal** is using a patched font.
+### For WSL Users (Windows Side)
+
+If running on WSL, you'll need a Nerd Font installed in Windows Terminal to render icons properly.
 
 1.  **Download:** [JetBrainsMono Nerd Font](https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/JetBrainsMono.zip)
 2.  **Install:** Extract -> Select all `.ttf` -> Right Click -> **Install**.
 3.  **Configure:** Windows Terminal Settings -> Ubuntu Profile -> Appearance -> Font face -> **JetBrainsMono NF**.
 
+### Supported Distributions
+
+**install.sh** works on:
+- **Debian/Ubuntu-based:** Ubuntu, Debian, Linux Mint, etc.
+- **Arch-based:** Arch Linux, Manjaro, CachyOS, EndeavourOS, etc.
+- **Fedora/RHEL-based:** Fedora, Nobara, AlmaLinux, Rocky Linux, etc.
+
+**install-dev-tools.sh** is distro-agnostic and works on all Linux distributions.
+
 ---
 
 ## 🚀 Quick Install
 
-On a fresh Ubuntu/WSL machine, run these commands:
+On any supported Linux distribution, run these commands:
 
 ```bash
 # Clone the repository
