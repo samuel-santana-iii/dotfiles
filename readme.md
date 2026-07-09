@@ -4,7 +4,7 @@ My personal "Master Class" configuration for Linux/WSL. This repository automate
 
 ## ⚡ The Stack
 
-* **Shell:** `Zsh` + `Oh My Zsh` (Plugins: Autosuggestions, Syntax Highlighting)
+* **Shell:** `Zsh` + `Zinit` (Plugins: Git aliases, Autosuggestions, Syntax Highlighting)
 * **Prompt:** `Starship` (Cross-shell, minimal, fast)
 * **Navigation:** `Zoxide` (Smarter `cd`)
 * **Editor:** `Vim`
