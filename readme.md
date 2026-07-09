@@ -1,6 +1,12 @@
 # 🛠️ Master Terminal Configuration
 
+**By [Samuel Santana](https://linkedin.com/in/samuel-santana-iii)** | [GitHub](https://github.com/samuel-santana-iii)
+
 My personal "Master Class" configuration for Linux. This repository automates the installation and configuration of a modern, Rust-based terminal environment across multiple distributions.
+
+I got tired of rebuilding my development environment every time I distrohopped or setup a new machine. Now I checkout this repository and run my install scripts to save me hours of configuration, and keeps my workflow consistent across my machines.
+
+![Terminal Screenshot](screenshot.png)
 
 ## ⚡ The Stack
 
@@ -9,6 +15,13 @@ My personal "Master Class" configuration for Linux. This repository automates th
 * **Navigation:** `Zoxide` (Smarter `cd`)
 * **Editor:** `Vim`
 * **Viewer:** `Bat` (Better `cat` with syntax highlighting)
+
+## Skills Demonstrated
+
+- Shell scripting (Bash)
+- Configuration management & automation
+- Cross-platform Linux support
+- Technical documentation
 
 ---
 
@@ -39,7 +52,7 @@ On any supported Linux distribution, run these commands:
 
 ```bash
 # Clone the repository
-git clone https://github.com/YOUR_USERNAME/dotfiles.git ~/dotfiles
+git clone https://github.com/samuel-santana-iii/dotfiles.git ~/dotfiles
 
 # Run the core shell setup
 chmod +x ~/dotfiles/install.sh
