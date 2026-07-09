@@ -6,7 +6,6 @@ My personal "Master Class" configuration for Linux/WSL. This repository automate
 
 * **Shell:** `Zsh` + `Oh My Zsh` (Plugins: Autosuggestions, Syntax Highlighting)
 * **Prompt:** `Starship` (Cross-shell, minimal, fast)
-* **Multiplexer:** `Zellij` (Modern replacement for Tmux)
 * **Navigation:** `Zoxide` (Smarter `cd`)
 * **Editor:** `Vim` (Configured for humans: Mouse support, line numbers)
 * **Viewer:** `Bat` (Better `cat` with syntax highlighting)
@@ -50,10 +49,7 @@ The `install.sh` script creates symlinks from your home directory to this folder
 ├── zshrc               # Linked to ~/.zshrc
 ├── vimrc               # Linked to ~/.vimrc
 └── config/
-    ├── starship.toml   # Linked to ~/.config/starship.toml
-    └── zellij/         # Linked to ~/.config/zellij/
-        ├── config.kdl
-        └── layouts/
+    └── starship.toml   # Linked to ~/.config/starship.toml
 ```
 
 ---
@@ -67,15 +63,8 @@ If the script fails or you prefer manual linking:
 | `~/.zshrc` | `./zshrc` | Main shell config |
 | `~/.vimrc` | `./vimrc` | Editor config |
 | `~/.config/starship.toml` | `./config/starship.toml` | Prompt theme |
-| `~/.config/zellij/` | `./config/zellij/` | Multiplexer settings |
 
 ## ⌨️ Cheatsheet
-
-### Zellij (Multiplexer)
-* **New Pane:** `Alt` + `n`
-* **Move Focus:** `Alt` + `Arrow Keys`
-* **New Tab:** `Alt` + `t`
-* **Close Pane:** `Ctrl` + `p` then `x`
 
 ### Zoxide (Navigation)
 * `z <name>`: Jump to directory (fuzzy match)
