@@ -7,7 +7,7 @@ My personal "Master Class" configuration for Linux/WSL. This repository automate
 * **Shell:** `Zsh` + `Oh My Zsh` (Plugins: Autosuggestions, Syntax Highlighting)
 * **Prompt:** `Starship` (Cross-shell, minimal, fast)
 * **Navigation:** `Zoxide` (Smarter `cd`)
-* **Editor:** `Vim` (Configured for humans: Mouse support, line numbers)
+* **Editor:** `Vim`
 * **Viewer:** `Bat` (Better `cat` with syntax highlighting)
 
 ---
@@ -77,4 +77,3 @@ If the script fails or you prefer manual linking:
 
 ### Vim (Editor)
 * **Paste from Windows:** `Ctrl` + `Shift` + `v` (Make sure to be in Insert Mode `i`)
-* **Toggle Paste Mode:** `F2` (If configured) prevents indentation staircasing.
