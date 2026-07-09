@@ -25,13 +25,13 @@ fi
 echo "Updating system and installing packages..."
 case $PKG_MGR in
     apt)
-        sudo apt update && sudo apt install -y git curl unzip fontconfig bat zsh
+        sudo apt update && sudo apt install -y git curl unzip fontconfig bat zsh bc ripgrep fd-find
         ;;
     pacman)
-        sudo pacman -Syu --noconfirm git curl unzip fontconfig bat zsh
+        sudo pacman -Syu --noconfirm git curl unzip fontconfig bat zsh ripgrep fd
         ;;
     dnf)
-        sudo dnf install -y git curl unzip fontconfig bat zsh
+        sudo dnf install -y git curl unzip fontconfig bat zsh ripgrep fd-find
         ;;
     *)
         echo "Unsupported distribution: $DISTRO"
@@ -40,14 +40,44 @@ case $PKG_MGR in
         ;;
 esac
 
+# Install Neovim
+echo "Installing Neovim..."
+if command -v nvim &> /dev/null; then
+    NVIM_VERSION=$(nvim --version | head -n1 | awk '{print $2}' | sed 's/^v//')
+    echo "Neovim $NVIM_VERSION is already installed."
+else
+    case $PKG_MGR in
+        apt)
+            # Check Ubuntu version - 26.04+ has Neovim 0.11.6
+            UBUNTU_VERSION=$(lsb_release -rs 2>/dev/null || echo "0")
+            if (( $(echo "$UBUNTU_VERSION >= 26.04" | bc -l 2>/dev/null || echo 0) )); then
+                sudo apt install -y neovim
+            else
+                # Use AppImage for older Ubuntu/Debian versions
+                echo "Ubuntu $UBUNTU_VERSION detected - using AppImage for latest Neovim..."
+                curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
+                chmod u+x nvim.appimage
+                sudo mv nvim.appimage /usr/local/bin/nvim
+            fi
+            ;;
+        pacman)
+            sudo pacman -S --noconfirm neovim
+            ;;
+        dnf)
+            sudo dnf install -y neovim
+            ;;
+    esac
+fi
+
 # Link Configs
 echo "Linking dotfiles..."
-rm -rf ~/.zshrc ~/.vimrc ~/.config/starship.toml
+rm -rf ~/.zshrc ~/.vimrc ~/.config/starship.toml ~/.config/nvim
 
 ln -sf ~/dotfiles/zshrc ~/.zshrc
 ln -sf ~/dotfiles/vimrc ~/.vimrc
 mkdir -p ~/.config
 ln -sf ~/dotfiles/config/starship.toml ~/.config/starship.toml
+ln -sf ~/dotfiles/config/nvim ~/.config/nvim
 
 # Configure Git
 echo "Configuring git to use vim..."
@@ -78,5 +108,12 @@ fi
 # Change Shell
 echo "Changing default shell to Zsh..."
 sudo chsh -s $(which zsh) $USER
+
+# Neovim first launch note
+if command -v nvim &> /dev/null; then
+    echo ""
+    echo "Note: Neovim will download plugins on first launch (1-2 minutes)."
+    echo "Run ':LazyHealth' after first launch to verify setup."
+fi
 
 echo "Done! Restart your terminal."
