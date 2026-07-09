@@ -15,6 +15,10 @@ ln -sf ~/dotfiles/vimrc ~/.vimrc
 mkdir -p ~/.config
 ln -sf ~/dotfiles/config/starship.toml ~/.config/starship.toml
 
+# Configure Git
+echo "Configuring git to use vim..."
+git config --global core.editor vim
+
 # Install Starship
 if ! command -v starship &> /dev/null; then
     echo "Installing Starship..."
