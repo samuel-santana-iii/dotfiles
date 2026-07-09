@@ -25,7 +25,7 @@ fi
 echo "Updating system and installing packages..."
 case $PKG_MGR in
     apt)
-        sudo apt update && sudo apt install -y git curl unzip fontconfig bat zsh bc ripgrep fd-find
+        sudo apt update && sudo apt install -y git curl unzip fontconfig bat zsh ripgrep fd-find
         ;;
     pacman)
         sudo pacman -Syu --noconfirm git curl unzip fontconfig bat zsh ripgrep fd
@@ -42,29 +42,68 @@ esac
 
 # Install Neovim
 echo "Installing Neovim..."
+NVIM_MIN_VERSION="0.12.0"
+NVIM_NEEDS_INSTALL=false
+
 if command -v nvim &> /dev/null; then
     NVIM_VERSION=$(nvim --version | head -n1 | awk '{print $2}' | sed 's/^v//')
-    echo "Neovim $NVIM_VERSION is already installed."
+    echo "Neovim $NVIM_VERSION is currently installed."
+
+    # Compare versions - if current version is less than 0.12.0, reinstall
+    if [ "$(printf '%s\n' "$NVIM_MIN_VERSION" "$NVIM_VERSION" | sort -V | head -n1)" != "$NVIM_MIN_VERSION" ]; then
+        echo "Neovim $NVIM_VERSION is too old (LazyVim requires $NVIM_MIN_VERSION+). Upgrading..."
+        NVIM_NEEDS_INSTALL=true
+    else
+        echo "Neovim version is compatible with LazyVim."
+    fi
 else
+    echo "Neovim not found. Installing..."
+    NVIM_NEEDS_INSTALL=true
+fi
+
+if [ "$NVIM_NEEDS_INSTALL" = true ]; then
     case $PKG_MGR in
         apt)
-            # Check Ubuntu version - 26.04+ has Neovim 0.11.6
-            UBUNTU_VERSION=$(lsb_release -rs 2>/dev/null || echo "0")
-            if (( $(echo "$UBUNTU_VERSION >= 26.04" | bc -l 2>/dev/null || echo 0) )); then
-                sudo apt install -y neovim
-            else
-                # Use AppImage for older Ubuntu/Debian versions
-                echo "Ubuntu $UBUNTU_VERSION detected - using AppImage for latest Neovim..."
-                curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
-                chmod u+x nvim.appimage
-                sudo mv nvim.appimage /usr/local/bin/nvim
+            # Download pre-built binary for latest Neovim (LazyVim requires v0.12.0+)
+            echo "Installing latest Neovim..."
+            ARCH=$(uname -m)
+            if [ "$ARCH" = "x86_64" ]; then
+                curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
+                tar xzvf nvim-linux-x86_64.tar.gz
+                sudo rm -rf /usr/local/nvim
+                sudo mv nvim-linux-x86_64 /usr/local/nvim
+                rm nvim-linux-x86_64.tar.gz
+            elif [ "$ARCH" = "aarch64" ]; then
+                curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-arm64.tar.gz
+                tar xzvf nvim-linux-arm64.tar.gz
+                sudo rm -rf /usr/local/nvim
+                sudo mv nvim-linux-arm64 /usr/local/nvim
+                rm nvim-linux-arm64.tar.gz
             fi
+            sudo ln -sf /usr/local/nvim/bin/nvim /usr/local/bin/nvim
             ;;
         pacman)
+            # Arch usually has latest stable
             sudo pacman -S --noconfirm neovim
             ;;
         dnf)
-            sudo dnf install -y neovim
+            # Download pre-built binary for latest Neovim (LazyVim requires v0.12.0+)
+            echo "Installing latest Neovim..."
+            ARCH=$(uname -m)
+            if [ "$ARCH" = "x86_64" ]; then
+                curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
+                tar xzvf nvim-linux-x86_64.tar.gz
+                sudo rm -rf /usr/local/nvim
+                sudo mv nvim-linux-x86_64 /usr/local/nvim
+                rm nvim-linux-x86_64.tar.gz
+            elif [ "$ARCH" = "aarch64" ]; then
+                curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-arm64.tar.gz
+                tar xzvf nvim-linux-arm64.tar.gz
+                sudo rm -rf /usr/local/nvim
+                sudo mv nvim-linux-arm64 /usr/local/nvim
+                rm nvim-linux-arm64.tar.gz
+            fi
+            sudo ln -sf /usr/local/nvim/bin/nvim /usr/local/bin/nvim
             ;;
     esac
 fi
