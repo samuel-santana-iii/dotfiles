@@ -27,15 +27,19 @@ Since this runs on WSL, the Linux subsystem cannot render icons unless the **Win
 On a fresh Ubuntu/WSL machine, run these commands:
 
 ```bash
-# 1. Clone the repository
-git clone [https://github.com/YOUR_USERNAME/dotfiles.git](https://github.com/YOUR_USERNAME/dotfiles.git) ~/dotfiles
+# Clone the repository
+git clone https://github.com/YOUR_USERNAME/dotfiles.git ~/dotfiles
 
-# 2. Run the master script
+# Run the core shell setup
 chmod +x ~/dotfiles/install.sh
 ~/dotfiles/install.sh
+
+# (Optional) Install development tools
+chmod +x ~/dotfiles/install-dev-tools.sh
+~/dotfiles/install-dev-tools.sh
 ```
 
-**Restart your terminal** after the script finishes.
+**Restart your terminal** after the scripts finish.
 
 ---
 
@@ -45,11 +49,12 @@ The `install.sh` script creates symlinks from your home directory to this folder
 
 ```text
 ~/dotfiles/
-├── install.sh          # The idempotent setup script
-├── zshrc               # Linked to ~/.zshrc
-├── vimrc               # Linked to ~/.vimrc
+├── install.sh              # Core shell setup (zsh, vim, starship, zoxide)
+├── install-dev-tools.sh    # Development tools (Node, AI CLIs)
+├── zshrc                   # Linked to ~/.zshrc
+├── vimrc                   # Linked to ~/.vimrc
 └── config/
-    └── starship.toml   # Linked to ~/.config/starship.toml
+    └── starship.toml       # Linked to ~/.config/starship.toml
 ```
 
 ---
