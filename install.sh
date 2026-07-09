@@ -19,6 +19,16 @@ ln -sf ~/dotfiles/config/starship.toml ~/.config/starship.toml
 echo "Configuring git to use vim..."
 git config --global core.editor vim
 
+# Install zsh plugins
+echo "Installing zsh plugins..."
+mkdir -p ~/.zsh
+if [ ! -d ~/.zsh/zsh-autosuggestions ]; then
+    git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions
+fi
+if [ ! -d ~/.zsh/zsh-syntax-highlighting ]; then
+    git clone https://github.com/zsh-users/zsh-syntax-highlighting ~/.zsh/zsh-syntax-highlighting
+fi
+
 # Install Starship
 if ! command -v starship &> /dev/null; then
     echo "Installing Starship..."

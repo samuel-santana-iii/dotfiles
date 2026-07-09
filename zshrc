@@ -1,19 +1,22 @@
-# Zinit installation directory
-ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+# Load zsh plugins (installed by install.sh)
+source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-# Download Zinit if it doesn't exist
-if [ ! -d "$ZINIT_HOME" ]; then
-   mkdir -p "$(dirname $ZINIT_HOME)"
-   git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
-fi
-
-# Source zinit
-source "${ZINIT_HOME}/zinit.zsh"
-
-# Load plugins
-zinit snippet OMZP::git                                         # OMZ git plugin (aliases)
-zinit light zsh-users/zsh-autosuggestions                       # Autosuggestions
-zinit light zsh-users/zsh-syntax-highlighting                   # Syntax highlighting
+# Git aliases
+alias gs='git status'
+alias ga='git add'
+alias gc='git commit -v'
+alias gco='git checkout'
+alias gp='git push'
+alias gd='git diff'
+alias gl='git pull'
+alias gst='git status'
+alias gsta='git stash'
+alias gstp='git stash pop'
+alias gstl='git stash list'
+alias glo='git log --oneline --decorate'
+alias glog='git log --oneline --decorate --graph'
+alias gpsup='git push --set-upstream origin $(git branch --show-current)'
 
 # Add DIRs to the path
 export PATH="$PATH:/snap/bin"
