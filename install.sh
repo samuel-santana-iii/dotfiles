@@ -25,7 +25,7 @@ fi
 echo "Updating system and installing packages..."
 case $PKG_MGR in
     apt)
-        sudo apt update && sudo apt install -y git curl unzip fontconfig bat zsh bc ripgrep fd-find
+        sudo apt update && sudo apt install -y git curl unzip fontconfig bat zsh ripgrep fd-find
         ;;
     pacman)
         sudo pacman -Syu --noconfirm git curl unzip fontconfig bat zsh ripgrep fd
@@ -48,23 +48,22 @@ if command -v nvim &> /dev/null; then
 else
     case $PKG_MGR in
         apt)
-            # Check Ubuntu version - 26.04+ has Neovim 0.11.6
-            UBUNTU_VERSION=$(lsb_release -rs 2>/dev/null || echo "0")
-            if (( $(echo "$UBUNTU_VERSION >= 26.04" | bc -l 2>/dev/null || echo 0) )); then
-                sudo apt install -y neovim
-            else
-                # Use AppImage for older Ubuntu/Debian versions
-                echo "Ubuntu $UBUNTU_VERSION detected - using AppImage for latest Neovim..."
-                curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
-                chmod u+x nvim.appimage
-                sudo mv nvim.appimage /usr/local/bin/nvim
-            fi
+            # Use AppImage for latest Neovim (LazyVim requires v0.12.0+)
+            echo "Installing latest Neovim via AppImage..."
+            curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
+            chmod u+x nvim.appimage
+            sudo mv nvim.appimage /usr/local/bin/nvim
             ;;
         pacman)
+            # Arch usually has latest stable
             sudo pacman -S --noconfirm neovim
             ;;
         dnf)
-            sudo dnf install -y neovim
+            # Fedora may lag behind, use AppImage for guaranteed latest
+            echo "Installing latest Neovim via AppImage..."
+            curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
+            chmod u+x nvim.appimage
+            sudo mv nvim.appimage /usr/local/bin/nvim
             ;;
     esac
 fi
