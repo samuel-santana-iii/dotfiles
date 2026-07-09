@@ -13,8 +13,12 @@ I got tired of rebuilding my development environment every time I distrohopped o
 * **Shell:** `Zsh` (Autosuggestions, Syntax Highlighting, Custom Git Aliases)
 * **Prompt:** `Starship` (Cross-shell, minimal, fast)
 * **Navigation:** `Zoxide` (Smarter `cd`)
-* **Editor:** `Vim`
+* **Editors:**
+  * `Vim` (Minimal config for quick edits)
+  * `Neovim + LazyVim` (Full IDE experience with LSP, Treesitter, Telescope)
 * **Viewer:** `Bat` (Better `cat` with syntax highlighting)
+* **Search:** `ripgrep` (Fast code search)
+* **Finder:** `fd` (Fast file finder)
 
 ## Skills Demonstrated
 
@@ -65,6 +69,8 @@ chmod +x ~/dotfiles/install-dev-tools.sh
 
 **Restart your terminal** after the scripts finish.
 
+**First Neovim Launch:** The first time you run `nvim`, it will download and install LazyVim plugins (1-2 minutes). After setup completes, run `:LazyHealth` to verify everything works.
+
 ---
 
 ## 📂 Repository Structure
@@ -73,12 +79,17 @@ The `install.sh` script creates symlinks from your home directory to this folder
 
 ```text
 ~/dotfiles/
-├── install.sh              # Core shell setup (zsh, vim, starship, zoxide)
+├── install.sh              # Core shell setup (zsh, vim, neovim, starship, zoxide)
 ├── install-dev-tools.sh    # Development tools (Node, AI CLIs)
 ├── zshrc                   # Linked to ~/.zshrc
 ├── vimrc                   # Linked to ~/.vimrc
 └── config/
-    └── starship.toml       # Linked to ~/.config/starship.toml
+    ├── starship.toml       # Linked to ~/.config/starship.toml
+    └── nvim/               # Linked to ~/.config/nvim (LazyVim)
+        ├── init.lua
+        └── lua/
+            ├── config/     # Editor settings and keymaps
+            └── plugins/    # Custom plugin configs
 ```
 
 ---
@@ -90,7 +101,8 @@ If the script fails or you prefer manual linking:
 | System Location | Repo Location | Description |
 | :--- | :--- | :--- |
 | `~/.zshrc` | `./zshrc` | Main shell config |
-| `~/.vimrc` | `./vimrc` | Editor config |
+| `~/.vimrc` | `./vimrc` | Minimal Vim config |
+| `~/.config/nvim/` | `./config/nvim/` | Neovim/LazyVim config |
 | `~/.config/starship.toml` | `./config/starship.toml` | Prompt theme |
 
 ## ⌨️ Cheatsheet
@@ -101,3 +113,17 @@ If the script fails or you prefer manual linking:
 
 ### Vim (Editor)
 * **Paste from Windows:** `Ctrl` + `Shift` + `v` (Make sure to be in Insert Mode `i`)
+
+### Neovim (LazyVim)
+* **Open file:** `nvim <filename>`
+* **Show all keybindings:** `<space>` (which-key menu)
+* **File explorer:** `<space>e` (Neo-tree)
+* **Find files:** `<space><space>` (Telescope)
+* **Search in files:** `<space>sg` (Telescope grep)
+* **Toggle terminal:** `<Ctrl>` + `/` (floating terminal window)
+* **Split window:** `<space>|` (vertical) or `<space>-` (horizontal)
+* **Plugin manager:** `:Lazy`
+* **Health check:** `:LazyHealth`
+* **LSP info:** `:LspInfo`
+
+For full LazyVim keybindings: https://www.lazyvim.org/keymaps
