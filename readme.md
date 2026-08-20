@@ -16,7 +16,6 @@ I got tired of rebuilding my development environment every time I distrohopped o
 * **Editors:**
   * `Vim` (Minimal config for quick edits)
   * `Neovim + LazyVim` (Full IDE experience with LSP, Treesitter, Telescope)
-* **Viewer:** `Bat` (Better `cat` with syntax highlighting)
 * **Search:** `ripgrep` (Fast code search)
 * **Finder:** `fd` (Fast file finder)
 

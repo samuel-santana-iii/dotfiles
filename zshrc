@@ -37,7 +37,4 @@ eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
 eval "$(zoxide init zsh --cmd cd)"
 
-# Bat aliases
-alias bat='batcat'
-alias cat='batcat'
-export BAT_THEME="ansi"
+export SOPS_AGE_KEY_FILE="$HOME/.config/sops/age/keys.txt"
