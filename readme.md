@@ -15,7 +15,7 @@ I got tired of rebuilding my development environment every time I distrohopped o
 * **Navigation:** `Zoxide` (Smarter `cd`)
 * **Editors:**
   * `Vim` (Minimal config for quick edits)
-  * `Neovim + LazyVim` (Full IDE experience with LSP, Treesitter, Telescope)
+  * `Neovim + LazyVim` (Full IDE experience with LSP, Treesitter, Snacks Picker)
 * **Search:** `ripgrep` (Fast code search)
 * **Finder:** `fd` (Fast file finder)
 
@@ -116,9 +116,9 @@ If the script fails or you prefer manual linking:
 ### Neovim (LazyVim)
 * **Open file:** `nvim <filename>`
 * **Show all keybindings:** `<space>` (which-key menu)
-* **File explorer:** `<space>e` (Neo-tree)
-* **Find files:** `<space><space>` (Telescope)
-* **Search in files:** `<space>sg` (Telescope grep)
+* **File explorer:** `<space>e` 
+* **Find files:** `<space><space>` 
+* **Search in files:** `<space>sg` (grep)
 * **Toggle terminal:** `<Ctrl>` + `/` (floating terminal window)
 * **Split window:** `<space>|` (vertical) or `<space>-` (horizontal)
 * **Plugin manager:** `:Lazy`
