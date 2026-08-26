@@ -1,3 +1,11 @@
+# Histfile support for command reverse search (ctrl+r)
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=50000
+SAVEHIST=50000
+setopt INC_APPEND_HISTORY_TIME
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_SPACE
+
 # Load zsh plugins (installed by install.sh)
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
@@ -30,6 +38,27 @@ if [ -d "$HOME/.nvm" ]; then
     export NVM_DIR="$HOME/.nvm"
     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
     [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+fi
+
+# Use fzf for command reverse search
+if (( $+commands[fzf] )); then
+  fzf-history-widget() {
+    local selected
+    # Run fzf into the variable without combining with 'local' declaration
+    selected=$(fc -rl 1 | fzf --height=40% --layout=reverse --scheme=history +m --query="$LBUFFER")
+    local ret=$?
+
+    # Only modify LBUFFER if an actual selection was made
+    if [[ $ret -eq 0 && -n "$selected" ]]; then
+      LBUFFER="${selected#*[0-9]  }"
+    fi
+
+    # Always redraw the prompt cleanly on both selection and escape/abort
+    zle reset-prompt
+    return $ret
+  }
+  zle -N fzf-history-widget
+  bindkey '^R' fzf-history-widget
 fi
 
 # Initialize Starship prompt
