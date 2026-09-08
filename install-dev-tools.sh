@@ -42,7 +42,7 @@ if command -v claude >/dev/null 2>&1; then
     echo "Claude Code is already installed."
 else
     echo "Installing Claude Code..."
-    curl -L https://claude.ai/install | sh
+    curl -fsSL https://claude.ai/install.sh | bash
     echo "Claude Code installed."
 fi
 
