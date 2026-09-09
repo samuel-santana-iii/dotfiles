@@ -25,13 +25,13 @@ fi
 echo "Updating system and installing packages..."
 case $PKG_MGR in
     apt)
-        sudo apt update && sudo apt install -y git curl unzip fontconfig zsh ripgrep fd-find fzf
+        sudo apt update && sudo apt install -y git curl unzip fontconfig zsh ripgrep fd-find fzf build-essential
         ;;
     pacman)
-        sudo pacman -Syu --noconfirm git curl unzip fontconfig zsh ripgrep fd fzf
+        sudo pacman -Syu --noconfirm git curl unzip fontconfig zsh ripgrep fd fzf base-devel
         ;;
     dnf)
-        sudo dnf install -y git curl unzip fontconfig zsh ripgrep fd-find fzf
+        sudo dnf install -y git curl unzip fontconfig zsh ripgrep fd-find fzf gcc make
         ;;
     *)
         echo "Unsupported distribution: $DISTRO"
