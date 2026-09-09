@@ -115,6 +115,29 @@ if [ "$NVIM_NEEDS_INSTALL" = true ]; then
     esac
 fi
 
+# Install lazygit (used by LazyVim's git integration)
+if ! command -v lazygit &> /dev/null; then
+    echo "Installing lazygit..."
+    case $PKG_MGR in
+        pacman)
+            sudo pacman -S --noconfirm lazygit
+            ;;
+        *)
+            LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')
+            ARCH=$(uname -m)
+            if [ "$ARCH" = "x86_64" ]; then
+                LAZYGIT_ARCH="x86_64"
+            elif [ "$ARCH" = "aarch64" ]; then
+                LAZYGIT_ARCH="arm64"
+            fi
+            curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/download/v${LAZYGIT_VERSION}/lazygit_${LAZYGIT_VERSION}_Linux_${LAZYGIT_ARCH}.tar.gz"
+            tar xf lazygit.tar.gz lazygit
+            sudo install lazygit /usr/local/bin
+            rm lazygit.tar.gz lazygit
+            ;;
+    esac
+fi
+
 # Link Configs
 echo "Linking dotfiles..."
 rm -rf ~/.zshrc ~/.vimrc ~/.config/starship.toml ~/.config/nvim
