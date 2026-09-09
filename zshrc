@@ -40,8 +40,11 @@ if [ -d "$HOME/.nvm" ]; then
     [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 fi
 
-# Use fzf for command reverse search
+# Use fzf for command reverse search (ctrl+r), file search (ctrl+t) and cd (alt+c)
 if (( $+commands[fzf] )); then
+  # Sets up file search, history and cd search
+  eval "$(fzf --zsh)"
+
   fzf-history-widget() {
     local selected
     # Run fzf into the variable without combining with 'local' declaration
