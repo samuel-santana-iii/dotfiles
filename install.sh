@@ -2,6 +2,13 @@
 
 # Core shell environment setup - portable across machines
 
+# Some steps require user priviledges
+if [ "$EUID" -eq 0 ]; then
+    echo "Don't run this script with sudo. Run it as your normal user."
+    echo "It calls sudo internally for the steps that need elevated privileges."
+    exit 1
+fi
+
 # Detect distro
 if [ -f /etc/os-release ]; then
     . /etc/os-release
