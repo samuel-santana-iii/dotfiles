@@ -29,7 +29,7 @@ fi
 # Install Gemini CLI
 PACKAGE_NAME="@google/gemini-cli"
 
-if npm list -g "$PACKAGE_NAME" > /dev/null 2>&1; then
+if npm list -g "$PACKAGE_NAME" >/dev/null 2>&1; then
     echo "$PACKAGE_NAME is already installed."
 else
     echo "Installing $PACKAGE_NAME..."

@@ -31,20 +31,20 @@ fi
 # Update & Essentials
 echo "Updating system and installing packages..."
 case $PKG_MGR in
-    apt)
-        sudo apt update && sudo apt install -y git curl unzip fontconfig zsh ripgrep fd-find fzf build-essential
-        ;;
-    pacman)
-        sudo pacman -Syu --noconfirm git curl unzip fontconfig zsh ripgrep fd fzf base-devel
-        ;;
-    dnf)
-        sudo dnf install -y git curl unzip fontconfig zsh ripgrep fd-find fzf gcc make
-        ;;
-    *)
-        echo "Unsupported distribution: $DISTRO"
-        echo "Supported: Debian/Ubuntu-based, Arch-based, Fedora/RHEL-based"
-        exit 1
-        ;;
+apt)
+    sudo apt update && sudo apt install -y git curl unzip fontconfig zsh ripgrep fd-find fzf build-essential
+    ;;
+pacman)
+    sudo pacman -Syu --noconfirm git curl unzip fontconfig zsh ripgrep fd fzf base-devel
+    ;;
+dnf)
+    sudo dnf install -y git curl unzip fontconfig zsh ripgrep fd-find fzf gcc make
+    ;;
+*)
+    echo "Unsupported distribution: $DISTRO"
+    echo "Supported: Debian/Ubuntu-based, Arch-based, Fedora/RHEL-based"
+    exit 1
+    ;;
 esac
 
 # Install Neovim
@@ -52,7 +52,7 @@ echo "Installing Neovim..."
 NVIM_MIN_VERSION="0.12.0"
 NVIM_NEEDS_INSTALL=false
 
-if command -v nvim &> /dev/null; then
+if command -v nvim &>/dev/null; then
     NVIM_VERSION=$(nvim --version | head -n1 | awk '{print $2}' | sed 's/^v//')
     echo "Neovim $NVIM_VERSION is currently installed."
 
@@ -70,71 +70,71 @@ fi
 
 if [ "$NVIM_NEEDS_INSTALL" = true ]; then
     case $PKG_MGR in
-        apt)
-            # Download pre-built binary for latest Neovim (LazyVim requires v0.12.0+)
-            echo "Installing latest Neovim..."
-            ARCH=$(uname -m)
-            if [ "$ARCH" = "x86_64" ]; then
-                curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
-                tar xzvf nvim-linux-x86_64.tar.gz
-                sudo rm -rf /usr/local/nvim
-                sudo mv nvim-linux-x86_64 /usr/local/nvim
-                rm nvim-linux-x86_64.tar.gz
-            elif [ "$ARCH" = "aarch64" ]; then
-                curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-arm64.tar.gz
-                tar xzvf nvim-linux-arm64.tar.gz
-                sudo rm -rf /usr/local/nvim
-                sudo mv nvim-linux-arm64 /usr/local/nvim
-                rm nvim-linux-arm64.tar.gz
-            fi
-            sudo ln -sf /usr/local/nvim/bin/nvim /usr/local/bin/nvim
-            ;;
-        pacman)
-            # Arch usually has latest stable
-            sudo pacman -S --noconfirm neovim
-            ;;
-        dnf)
-            # Download pre-built binary for latest Neovim (LazyVim requires v0.12.0+)
-            echo "Installing latest Neovim..."
-            ARCH=$(uname -m)
-            if [ "$ARCH" = "x86_64" ]; then
-                curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
-                tar xzvf nvim-linux-x86_64.tar.gz
-                sudo rm -rf /usr/local/nvim
-                sudo mv nvim-linux-x86_64 /usr/local/nvim
-                rm nvim-linux-x86_64.tar.gz
-            elif [ "$ARCH" = "aarch64" ]; then
-                curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-arm64.tar.gz
-                tar xzvf nvim-linux-arm64.tar.gz
-                sudo rm -rf /usr/local/nvim
-                sudo mv nvim-linux-arm64 /usr/local/nvim
-                rm nvim-linux-arm64.tar.gz
-            fi
-            sudo ln -sf /usr/local/nvim/bin/nvim /usr/local/bin/nvim
-            ;;
+    apt)
+        # Download pre-built binary for latest Neovim (LazyVim requires v0.12.0+)
+        echo "Installing latest Neovim..."
+        ARCH=$(uname -m)
+        if [ "$ARCH" = "x86_64" ]; then
+            curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
+            tar xzvf nvim-linux-x86_64.tar.gz
+            sudo rm -rf /usr/local/nvim
+            sudo mv nvim-linux-x86_64 /usr/local/nvim
+            rm nvim-linux-x86_64.tar.gz
+        elif [ "$ARCH" = "aarch64" ]; then
+            curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-arm64.tar.gz
+            tar xzvf nvim-linux-arm64.tar.gz
+            sudo rm -rf /usr/local/nvim
+            sudo mv nvim-linux-arm64 /usr/local/nvim
+            rm nvim-linux-arm64.tar.gz
+        fi
+        sudo ln -sf /usr/local/nvim/bin/nvim /usr/local/bin/nvim
+        ;;
+    pacman)
+        # Arch usually has latest stable
+        sudo pacman -S --noconfirm neovim
+        ;;
+    dnf)
+        # Download pre-built binary for latest Neovim (LazyVim requires v0.12.0+)
+        echo "Installing latest Neovim..."
+        ARCH=$(uname -m)
+        if [ "$ARCH" = "x86_64" ]; then
+            curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
+            tar xzvf nvim-linux-x86_64.tar.gz
+            sudo rm -rf /usr/local/nvim
+            sudo mv nvim-linux-x86_64 /usr/local/nvim
+            rm nvim-linux-x86_64.tar.gz
+        elif [ "$ARCH" = "aarch64" ]; then
+            curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-arm64.tar.gz
+            tar xzvf nvim-linux-arm64.tar.gz
+            sudo rm -rf /usr/local/nvim
+            sudo mv nvim-linux-arm64 /usr/local/nvim
+            rm nvim-linux-arm64.tar.gz
+        fi
+        sudo ln -sf /usr/local/nvim/bin/nvim /usr/local/bin/nvim
+        ;;
     esac
 fi
 
 # Install lazygit (used by LazyVim's git integration)
-if ! command -v lazygit &> /dev/null; then
+if ! command -v lazygit &>/dev/null; then
     echo "Installing lazygit..."
     case $PKG_MGR in
-        pacman)
-            sudo pacman -S --noconfirm lazygit
-            ;;
-        *)
-            LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')
-            ARCH=$(uname -m)
-            if [ "$ARCH" = "x86_64" ]; then
-                LAZYGIT_ARCH="x86_64"
-            elif [ "$ARCH" = "aarch64" ]; then
-                LAZYGIT_ARCH="arm64"
-            fi
-            curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/download/v${LAZYGIT_VERSION}/lazygit_${LAZYGIT_VERSION}_Linux_${LAZYGIT_ARCH}.tar.gz"
-            tar xf lazygit.tar.gz lazygit
-            sudo install lazygit /usr/local/bin
-            rm lazygit.tar.gz lazygit
-            ;;
+    pacman)
+        sudo pacman -S --noconfirm lazygit
+        ;;
+    *)
+        LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')
+        ARCH=$(uname -m)
+        if [ "$ARCH" = "x86_64" ]; then
+            LAZYGIT_ARCH="x86_64"
+        elif [ "$ARCH" = "aarch64" ]; then
+            LAZYGIT_ARCH="arm64"
+        fi
+        curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/download/v${LAZYGIT_VERSION}/lazygit_${LAZYGIT_VERSION}_Linux_${LAZYGIT_ARCH}.tar.gz"
+        tar xf lazygit.tar.gz lazygit
+        sudo install lazygit /usr/local/bin
+        rm lazygit.tar.gz lazygit
+        ;;
     esac
 fi
 
@@ -163,13 +163,13 @@ if [ ! -d ~/.zsh/zsh-syntax-highlighting ]; then
 fi
 
 # Install Starship
-if ! command -v starship &> /dev/null; then
+if ! command -v starship &>/dev/null; then
     echo "Installing Starship..."
     curl -sS https://starship.rs/install.sh | sh -s -- -y
 fi
 
 # Install Zoxide
-if ! command -v zoxide &> /dev/null; then
+if ! command -v zoxide &>/dev/null; then
     echo "Installing Zoxide..."
     curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | bash
 fi
@@ -179,7 +179,7 @@ echo "Changing default shell to Zsh..."
 sudo chsh -s $(which zsh) $USER
 
 # Neovim first launch note
-if command -v nvim &> /dev/null; then
+if command -v nvim &>/dev/null; then
     echo ""
     echo "Note: Neovim will download plugins on first launch (1-2 minutes)."
     echo "Run ':LazyHealth' after first launch to verify setup."
